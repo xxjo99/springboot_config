@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!-- 로그 패턴 변수 -->
+    <property name="CONSOLE_LOG_PATTERN" value="%green(%d{yyyy-MM-dd HH:mm:ss.SSS}) %magenta([%thread]) %highlight(%5level) %cyan(%logger) - %yellow(%msg%n)" />
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5level %logger - %msg%n" />
+
+    <!-- 로컬 -->
+    <springProfile name="local">
+        <include resource="./logAppender/console-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <!-- 개발 -->
+    <springProfile name="dev">
+        <include resource="./logAppender/console-appender.xml"/>
+        <include resource="./logAppender/file-info-appender.xml"/>
+
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="FILE-INFO"/>
+        </root>
+
+        <logger level="DEBUG" name="org.hibernate.SQL">
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+
+        <logger level="TRACE" name="org.hibernate.type.descriptor.sql.BasicBinder">
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+    </springProfile>
+
+    <!-- 운용 -->
+    <springProfile name="prod">
+        <include resource="./logAppender/file-error-appender.xml"/>
+
+        <root level="ERROR">
+            <appender-ref ref="FILE-ERROR"/>
+        </root>
+    </springProfile>
+
+</configuration>
