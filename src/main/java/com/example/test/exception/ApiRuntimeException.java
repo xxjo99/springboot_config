@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class ApiRuntimeException extends RuntimeException {
     private ExceptionType exceptionType;
+    private Exception ex;
 
     public ApiRuntimeException(ExceptionType exceptionType) {
         this.exceptionType = exceptionType;
@@ -14,7 +15,8 @@ public class ApiRuntimeException extends RuntimeException {
 
     public ApiRuntimeException(ExceptionType exceptionType, Exception ex) {
         super(ex);
+
+        this.ex = ex;
         this.exceptionType = exceptionType;
     }
-    // private CustomTrace customTrace;
 }

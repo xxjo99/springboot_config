@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 public class TempDto {
     private Long tempId;
 
-    @NotBlank
+    @NotBlank(message = "공백 에러")
     private String tempName;
 }

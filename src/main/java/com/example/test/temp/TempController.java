@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.test.exception.ApiRuntimeException;
+import com.example.test.exception.ExceptionType;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -21,16 +24,23 @@ public class TempController {
 
     @GetMapping("/all")
     public List<TempDto> getAllDatas() {
-        List<TempEntity> tempEntityList = tempService.getAllDatas();
 
-        // Entity to Dto
-        List<TempDto> tempDtoList = new ArrayList<>();
-        for (TempEntity tempEntity : tempEntityList) {
-            TempDto tempDto = TempMapper.mapper.toDto(tempEntity);
-            tempDtoList.add(tempDto);
+        try {
+
+            List<TempEntity> tempEntityList = tempService.getAllDatas();
+
+            // Entity to Dto
+            List<TempDto> tempDtoList = new ArrayList<>();
+            for (TempEntity tempEntity : tempEntityList) {
+                TempDto tempDto = TempMapper.mapper.toDto(tempEntity);
+                tempDtoList.add(tempDto);
+            }
+
+            return tempDtoList;
+        } catch (RuntimeException e) {
+            throw new ApiRuntimeException(ExceptionType.SERVER_ERROR, e);
         }
 
-        return tempDtoList;
     }
 
     @PostMapping("/save")

@@ -24,9 +24,9 @@
             <appender-ref ref="FILE-INFO"/>
         </root>
 
-        <logger level="DEBUG" name="org.hibernate.SQL">
+        <logger level="DEBUG" name="rg.hibernate.SQL">
             <appender-ref ref="FILE-INFO"/>
-        </logger>
+        </logger>o
 
         <logger level="TRACE" name="org.hibernate.type.descriptor.sql.BasicBinder">
             <appender-ref ref="FILE-INFO"/>
